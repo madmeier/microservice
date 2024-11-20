@@ -18,7 +18,7 @@ spec:
       serviceAccountName: leader-election-sa 
       containers:
       - name: microservice
-        image: madmeier/microservice:1.0.4 # Docker image of your service
+        image: madmeier/microservice:1.0.5 # Docker image of your service
         ports:
         - containerPort: 8080  # Port your service will expose
         livenessProbe:

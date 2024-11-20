@@ -6,7 +6,11 @@ COPY . ${SOURCES}
 
 RUN cd ${SOURCES} && go build -o /bin/microservice
 
+
+FROM scratch
+COPY --from=0 /bin/microservice /bin/microservice
+
 ENV PORT=8080
 EXPOSE 8080
 
-ENTRYPOINT microservice
+CMD ["/bin/microservice"]
