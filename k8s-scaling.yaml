@@ -1,0 +1,21 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: microservice-hpa
+  namespace: blue-orb
+  labels:
+    app: microservice
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: microservice-deployment
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 101

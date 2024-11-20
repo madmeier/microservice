@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-deployment
+  namespace: blue-orb
+  labels:
+    app: microservice
+spec:
+  replicas: 3  # Number of instances of your microservice
+  selector:
+    matchLabels:
+      app: microservice
+  template:
+    metadata:
+      labels:
+        app: microservice
+    spec:
+      serviceAccountName: leader-election-sa 
+      containers:
+      - name: microservice
+        image: madmeier/microservice:1.0.4 # Docker image of your service
+        ports:
+        - containerPort: 8080  # Port your service will expose
+        livenessProbe:
+          httpGet:
+            path: /is-alive
+            port: 8080
+          failureThreshold: 3
+          initialDelaySeconds: 25
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /is-ready
+            port: 8080
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 5

@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: leader-election-role-binding
+  namespace: blue-orb
+subjects:
+- kind: ServiceAccount
+  name: leader-election-sa
+  namespace: blue-orb
+roleRef:
+  kind: Role
+  name: leader-election-role
+  apiGroup: rbac.authorization.k8s.io
